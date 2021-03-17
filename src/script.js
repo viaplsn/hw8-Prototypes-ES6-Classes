@@ -1,32 +1,41 @@
 //Basic
 class Student {
-    constructor(university, course, fullName, studentMarks = [5, 4, 4, 5]) {
+    constructor(university, course, fullName, studentMarks = [5, 4, 4, 5], studentStatus = true) {
         this.university = university;
         this.course = course;
         this.fullName = fullName;
         this.studentMarks = studentMarks;
+        this.studentStatus = studentStatus;
     }
     getInfo() {
         return `Студент ${this.course}го курсу університету ${this.university}, ${this.fullName}`;
     }
     get marks() {
-        return this.studentMarks
+        if(this.studentStatus != false) {
+            return this.studentMarks
+        } else {
+            return null;
+        }
     }
     set setMarks(mark) {
-        if(this.studentMarks != null) {
+        if(this.studentStatus != false) {
             return this.studentMarks.push(mark);
+        } else {
+            return null;
         }
     }
     getAverageMark() {
-        if(this.studentMarks != null) {
+        if(this.studentStatus != false) {
             return this.studentMarks.reduce(callbackGetAverage, 0) / this.studentMarks.length;
+        } else {
+            return null;
         }
     }
     dismiss() {
-        this.studentMarks = null;
+        this.studentStatus = false;
     }
     recover() {
-        this.studentMarks = [];
+        this.studentStatus = true;
     }
 }
 
@@ -51,17 +60,16 @@ console.log("Оцінки студента після відрахування:"
 
 student.recover();
 student.setMarks = 4;
-student.setMarks = 5;
-console.log("Оцінки студента після відновлення:", student.marks);
+console.log("Оцінки студента після відновлення та виставленої 4ки:", student.marks);
 
 //Advanced
 class BudgetStudent extends Student {
-    constructor(university, course, fullName, studentMarks) {
-        super(university, course, fullName, studentMarks);
+    constructor(university, course, fullName, studentMarks, studentStatus) {
+        super(university, course, fullName, studentMarks, studentStatus);
         this.getScholarship = function getScholarship() {
             if(this.getAverageMark() >= 4) {
                 console.log('Повідомлення про отримання стипендії: "Ви отримали 1400 грн. стипендії"')
-            } else if(this.studentMarks === null) {
+            } else if(this.studentStatus != true) {
                 console.log('Повідомлення про відрахування: "Вас відраховано"');
             } else {
                 console.log('Повідомлення про отримання стипендії: "Ви не набрали прохідний бал 4.0 для отримання стипендії"');
@@ -79,6 +87,4 @@ budgetStudent.dismiss();
 budgetStudent.getScholarship();
 
 budgetStudent.recover();
-student.setMarks = 3;
-student.setMarks = 3;
 budgetStudent.getScholarship();
