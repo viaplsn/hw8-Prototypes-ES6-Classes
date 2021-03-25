@@ -11,21 +11,21 @@ class Student {
         return `Студент ${this.course}го курсу університету ${this.university}, ${this.fullName}`;
     }
     get marks() {
-        if(this.studentStatus != false) {
+        if(this.studentStatus) {
             return this.studentMarks
         } else {
             return null;
         }
     }
     set setMarks(mark) {
-        if(this.studentStatus != false) {
+        if(this.studentStatus) {
             return this.studentMarks.push(mark);
         } else {
             return null;
         }
     }
     getAverageMark() {
-        if(this.studentStatus != false) {
+        if(this.studentStatus) {
             return this.studentMarks.reduce(callbackGetAverage, 0) / this.studentMarks.length;
         } else {
             return null;
@@ -69,7 +69,7 @@ class BudgetStudent extends Student {
         this.getScholarship = function getScholarship() {
             if(this.getAverageMark() >= 4) {
                 console.log('Повідомлення про отримання стипендії: "Ви отримали 1400 грн. стипендії"')
-            } else if(this.studentStatus != true) {
+            } else if(!this.studentStatus) {
                 console.log('Повідомлення про відрахування: "Вас відраховано"');
             } else {
                 console.log('Повідомлення про отримання стипендії: "Ви не набрали прохідний бал 4.0 для отримання стипендії"');
